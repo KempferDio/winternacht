@@ -6,7 +6,7 @@
 #include <time.h>
 #include <chrono>
 #define LOG_FILE_NAME "log.txt"
-#define CLOCKS_PER_MS (CLOCKS_PER_SEC * 1000)
+#define MS_IN_SEC 1000
 
 namespace Core {
     class Log {
@@ -15,8 +15,10 @@ namespace Core {
         static std::chrono::milliseconds startTime;
         static void makeNote(const std::string &msg);
         static void makeNote(const std::string &msg, const std::string &module);
+        
     private:
         static void recordIntoLogFile(std::string fullMsg);
+        static float getCurrentTimeFromStart();
     };
 }
 

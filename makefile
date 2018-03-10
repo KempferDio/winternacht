@@ -20,7 +20,7 @@ $(BIN)/$(TARGET) : $(OBJS)
 	$(CC) $^  $(LIB) $(LFLAGS)  -o $@
 
 $(OBJ)/%.o : $(SRC)/%.cpp
-	$(CC) $< $(INCLUDE)  $(USRINCLUDE)  $(CFLAGS) -o $@
+	$(CC) $< $(INCLUDE) $(USRINCLUDE) $(CFLAGS) -o $@
 
 clear:
 	find . -name "*.o" -delete
