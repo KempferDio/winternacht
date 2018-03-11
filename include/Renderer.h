@@ -11,6 +11,8 @@ namespace Core {
                     
             static void Render(/* Game Object goes here */);
             static SDL_Renderer* GetRenderer();
+            static bool IsWindowOpen();
+            static void SetWindowOpen(bool state);
             static void Terminate();
         private:
             static SDL_Renderer* MainRenderer;
@@ -18,6 +20,7 @@ namespace Core {
             static unsigned int WindowWidth;
             static unsigned int WindowHeight;
             static std::string WindowTitle;
+            static bool IsOpen;
     };
 }
 

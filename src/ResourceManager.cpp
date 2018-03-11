@@ -49,6 +49,10 @@ SDL_Texture* ResourceManager::GetTexture(const std::string &name) {
     return Textures.at(name);
 }
 
+void ResourceManager::FreeMemory() {
+    Textures.clear();
+}
+
 void ResourceManager::Terminate() {
     IMG_Quit();
 }
