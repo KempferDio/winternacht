@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 
 #include <Component.h>
+#include <Log.h>
 #include <vector>
 #include <memory>
 
@@ -15,11 +16,22 @@ namespace Core {
             std::map<int, Component*> components;
 
             template <typename T>
-            void addComponent() {
-                Component* component = new T;
-                components.insert(std::pair<unsigned int, Component*>(component->Id, component));
+            void addComponent(int componentId) {
+                try {
+                    Component* component = components.at(componentId);
+                    if(component != NULL) {
+                        Log::makeNote("Unable to add component. That component already exist");
+                        return;
+                    }
+                } catch(std::out_of_range &ex) {
+#ifdef DEBUG
+                    Log::makeNote("Component was added");
+#endif
+                    Component* component = new T;
+                    components.insert(std::pair<unsigned int, Component*>(component->Id, component));
+                }
             }
-
+\
             void removeComponent(int componentId) {
                 components.erase(componentId);
             }

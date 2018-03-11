@@ -27,13 +27,13 @@ SDL_Texture* ResourceManager::LoadTexture(const std::string &path, const std::st
     surface = IMG_Load(path.c_str());
     
     if(surface == NULL) {
-        Log::makeNote("Image couldn't load");
+        Log::makeNote("Image couldn't load", "ResourceManager::LoadTexture");
         return NULL;
     }
 
     texture = SDL_CreateTextureFromSurface(mainRenderer, surface);
     if(texture == NULL) {
-        Log::makeNote("Texture couldn't create from surface");
+        Log::makeNote("Texture couldn't create from surface", "ResourceManager::LoadTexture");
         return NULL;
     }
 

@@ -25,13 +25,9 @@ int main() {
     Log::makeNote("Debug mode active!", "main");
 #endif
     GameObject newGO;
-    newGO.addComponent<Components::Health>();
-    newGO.addComponent<Components::Sprite>();
+    newGO.addComponent<Components::Health>(HEALTH_COMPONENT);
+    newGO.addComponent<Components::Health>(HEALTH_COMPONENT);
     newGO.getComponent<Components::Health>(HEALTH_COMPONENT)->HP = 53;
-    std::cout << newGO.getComponent<Components::Health>(HEALTH_COMPONENT)->HP << std::endl;
-    newGO.removeComponent(HEALTH_COMPONENT);
-    newGO.addComponent<Components::Health>();
-    newGO.getComponent<Components::Health>(HEALTH_COMPONENT)->HP = 34;
     std::cout << newGO.getComponent<Components::Health>(HEALTH_COMPONENT)->HP << std::endl;
     
 
