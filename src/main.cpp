@@ -1,6 +1,13 @@
-#include <SDL2/SDL.h>
+#include <Engine.h>
+#include <ResourceManager.h>
+#include <Renderer.h>
 #include <Log.h>
 #include <chrono>
+#include <SDL2/SDL_image.h>
+
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 using namespace Core;
 using namespace std::chrono;
@@ -13,50 +20,45 @@ int main() {
 #ifdef DEBUG
     Log::makeNote("Debug mode active!", "main");
 #endif
+//SDL_ConvertSurface
+//SDL_MapRGBA
+//SDL_FillRect
+//SDL_BlitScaled
 
-    if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        Log::makeNote("SDL Init error");
-        return 1;
-    }
-    Log::makeNote("End of init");
+    Engine::InitSystem();
+    Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
+    ResourceManager::InitManager(Renderer::GetRenderer());
 
-    SDL_Window *window = SDL_CreateWindow("Winternacht", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
-    if(window == NULL) {
-        Log::makeNote("Window couldn't created");
-        return 1;
-    }
-    Log::makeNote("Start");
-    
-    SDL_Surface *screen = SDL_GetWindowSurface(window);
-    Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255);
+    ResourceManager::LoadTexture("../res/textures/dummy.png", "Dummy");
 
-    SDL_FillRect(screen, NULL, white);
+    SDL_Rect rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 800;
+    rect.h = 200;
 
-    SDL_UpdateWindowSurface(window);
-
-    SDL_Surface *sprite = SDL_LoadBMP("../res/textures/image.bmp");
-    if(sprite == NULL) {
-        Log::makeNote("Sprite couldn't load", "main");
-    }
-
-    SDL_BlitSurface(sprite, NULL, screen, NULL);
-    Log::makeNote("BlitSurface");
-
-    SDL_Event e;
     bool running = true;
+    SDL_Event e;
     while(running) {
-        
+
         while(SDL_PollEvent(&e)) {
             switch(e.type) {
                 case SDL_QUIT:
-                running = false;
+                    running = false;
                 break;
             }
         }
+
+        SDL_RenderClear(Renderer::GetRenderer());
+
+        SDL_RenderCopy(Renderer::GetRenderer(), ResourceManager::GetTexture("Dummy"), NULL, &rect);
+
+        SDL_RenderPresent(Renderer::GetRenderer());
+
     }
-    
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+
+    Renderer::Terminate();
+
 
     return 0;
 }

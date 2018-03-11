@@ -5,10 +5,10 @@ USRINCLUDE = -I/usr/local/include -I/usr/include
 SRC = src
 OBJ = obj
 BIN = bin
-LIB = -L/usr/local/lib
+LIB = -L/usr/local/lib -L/usr/lib
 
 CFLAGS = -c -Wall -DDEBUG -std=c++11
-LFLAGS = -lSDL2 -lSDL2main
+LFLAGS = -lSDL2 -lSDL2_image
 
 SRCS = $(wildcard $(SRC)/*.cpp \
 		$(SRC)/*.c)
