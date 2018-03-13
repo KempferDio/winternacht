@@ -10,7 +10,6 @@
 #include <Game/GameObject.h>
 #include <Component.h>
 #include <Components/Health.h>
-#include <Components/Sprite.h>
 
 #include <Command.h>
 #include <Commands/MakeLog.h>
@@ -40,19 +39,21 @@ int main() {
 
     Commands::MakeLog *comm = new Commands::MakeLog;
     IM.SetButtonW(comm);
+ 
 
-
-    int clip = 0;
     while(Renderer::IsWindowOpen()) {
+
         Command* command = IM.HandleInput();
         if(command) {
             command->execute();
         }
         
         SDL_RenderClear(Renderer::GetRenderer());
-        ResourceManager::GetSprite("Dummy").Render(ResourceManager::GetSprite("Dummy").clips[clip].x,
-            ResourceManager::GetSprite("Dummy").clips[clip].y,
-            &ResourceManager::GetSprite("Dummy").clips[clip]);
+
+        Renderer::Render(ResourceManager::GetSprite("Dummy").clips[0].x,
+            ResourceManager::GetSprite("Dummy").clips[0].y,
+            "DummySheet",
+            &ResourceManager::GetSprite("Dummy").clips[0]);
 
         
         SDL_RenderPresent(Renderer::GetRenderer());

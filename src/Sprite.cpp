@@ -35,13 +35,3 @@ Sprite::~Sprite() {
     //~dtor
 }
 
-void Sprite::Render(int x, int y, SDL_Rect* clip) {
-    if(clip == NULL) {
-        Log::makeNote("Clip is null", "Sprite::Render");
-        return;
-    }
-    SDL_Rect renderQuad = { x, y, clip->w, clip->h };
-
-    SDL_RenderCopy(Renderer::GetRenderer(), texture, clip, &renderQuad);
-
-}

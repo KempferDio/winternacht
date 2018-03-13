@@ -4,6 +4,7 @@
 
 #define HEALTH_COMPONENT 0
 #define SPRITE_COMPONENT 1
+#define TRANSFORM_COMPONENT 2
 
 namespace Core {
 

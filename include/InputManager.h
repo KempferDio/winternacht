@@ -8,23 +8,7 @@
 namespace Core {
     class InputManager {
         public:
-            Command* HandleInput() {
-                SDL_Event e;
-                while(SDL_PollEvent(&e)) {
-                    if(e.type == SDL_QUIT) {
-                        Renderer::SetWindowOpen(false);
-                    }
-                    if(e.type == SDL_KEYDOWN) {
-                        switch(e.key.keysym.sym) {
-                            //W
-                            case SDLK_w: 
-                            return button_W;
-                        }
-                    }
-                }
-
-                return NULL;
-            }
+            Command* HandleInput();
             
             template <class T>
             void SetButtonW(T newCommand) {
@@ -42,12 +26,16 @@ namespace Core {
             void SetButtonD(T newCommand) {
                 button_D =  dynamic_cast<Command*>(newCommand);
             }
-            
-        private:
+
+            void Terminate();
+
             Command* button_W;
             Command* button_A;
             Command* button_S;
             Command* button_D;
+            
+        private:
+            
     };
 }
 

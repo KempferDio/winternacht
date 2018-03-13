@@ -1,11 +1,8 @@
-/*#include <InputManager.h>
+#include <InputManager.h>
 
 using namespace Core;
 
-Command* InputManager::button_W;
-Command* InputManager::button_A;
-Command* InputManager::button_S;
-Command* InputManager::button_D;
+/*
 
 template <class T>
 void InputManager::SetButtonW(T newCommand) {
@@ -22,28 +19,27 @@ void InputManager::SetButtonS(T newCommand) {
 template <class T>
 void InputManager::SetButtonD(T newCommand) {
     button_D = newCommand;
-}
+}*/
 
 Command* InputManager::HandleInput() {
-    SDL_Event e;
+   SDL_Event e;
     while(SDL_PollEvent(&e)) {
-        if(e.type == SDL_KEYDOWN) {
+        if(e.type == SDL_QUIT) {
+            Renderer::SetWindowOpen(false);
+    }
+    if(e.type == SDL_KEYDOWN) {
             switch(e.key.keysym.sym) {
-                //W
-                case SDLK_w: 
-                return button_W;
-                //A
-                case SDLK_a:
-                return button_A;
-                //S    
-                case SDLK_s:
-                return button_S;
-                //D
-                case SDLK_d:
-                return button_D;
+                            //W
+            case SDLK_w: 
+            return button_W;
             }
         }
     }
 
     return NULL;
-}*/
+
+}
+
+void InputManager::Terminate() {
+    
+}

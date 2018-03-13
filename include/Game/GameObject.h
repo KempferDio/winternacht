@@ -12,9 +12,11 @@ namespace Core {
             GameObject() {}
             virtual ~GameObject() {}
             
-            std::vector<Component*> _components;
             std::map<int, Component*> components;
 
+            /*
+                Appends component with type and component id to game object
+            */
             template <typename T>
             void addComponent(int componentId) {
                 try {
@@ -31,11 +33,17 @@ namespace Core {
                     components.insert(std::pair<unsigned int, Component*>(component->Id, component));
                 }
             }
-\
+
+            /*
+                Removes component from game object
+            */
             void removeComponent(int componentId) {
                 components.erase(componentId);
             }
 
+            /*
+                Returns component
+            */
             template<typename T>
             T* getComponent(int componentId) {
                 Component* component = components.at(componentId);

@@ -47,9 +47,9 @@ void Renderer::SetWindowOpen(bool state) {
     IsOpen = state;
 }
 
-void Renderer::Render() {
-    //No imp
-    //Later
+void Renderer::Render(int x, int y, const std::string &textureName, SDL_Rect *clip) {
+    SDL_Rect renderQuad = { x, y, clip->w, clip->h };
+    SDL_RenderCopy(GetRenderer(), ResourceManager::GetTexture(textureName), clip, &renderQuad);
 }
 
 void Renderer::Terminate() {
