@@ -1,6 +1,7 @@
 #include <Engine.h>
 #include <ResourceManager.h>
 #include <Renderer.h>
+#include <InputManager.h>
 #include <Log.h>
 #include <chrono>
 #include <SDL2/SDL_image.h>
@@ -10,6 +11,9 @@
 #include <Component.h>
 #include <Components/Health.h>
 #include <Components/Sprite.h>
+
+#include <Command.h>
+#include <Commands/MakeLog.h>
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -26,33 +30,35 @@ int main() {
 #ifdef DEBUG
     Log::makeNote("Debug mode active!", "main");
 #endif
-    
-
     Engine::InitSystem();
     Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
 
     ResourceManager::LoadTexture("../res/textures/dummy.png", "DummySheet");
     ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy", 8, 1, 64);
+    InputManager IM;
 
-    SDL_Event e;
+    Commands::MakeLog *comm = new Commands::MakeLog;
+    IM.SetButtonW(comm);
+
+
     int clip = 0;
     while(Renderer::IsWindowOpen()) {
-        while(SDL_PollEvent(&e)) {
-            if(e.type == SDL_QUIT) {
-                Renderer::SetWindowOpen(false);
-                break;
-            }
+        Command* command = IM.HandleInput();
+        if(command) {
+            command->execute();
         }
         
         SDL_RenderClear(Renderer::GetRenderer());
         ResourceManager::GetSprite("Dummy").Render(ResourceManager::GetSprite("Dummy").clips[clip].x,
             ResourceManager::GetSprite("Dummy").clips[clip].y,
             &ResourceManager::GetSprite("Dummy").clips[clip]);
-        
+
         
         SDL_RenderPresent(Renderer::GetRenderer());
     }
+    delete comm;
+
 
     Renderer::Terminate();
     ResourceManager::Terminate();

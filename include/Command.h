@@ -4,9 +4,10 @@
 namespace Core {
 
     class Command {
-        Command();
-        virtual ~Command();
+    public:
+        Command() {}
         virtual void execute() = 0;
+        virtual ~Command() { }
     };
     
 }
