@@ -15,46 +15,42 @@
 #define SCREEN_HEIGHT 600
 
 using namespace Core;
-using namespace std::chrono;
+
 
 bool Log::isLogFileWasCreated = false;
-milliseconds Log::startTime = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+std::chrono::milliseconds Log::startTime =
+ std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
 int main() {
+    
 #ifdef DEBUG
     Log::makeNote("Debug mode active!", "main");
 #endif
-    GameObject newGO;
-    newGO.addComponent<Components::Health>(HEALTH_COMPONENT);
-    newGO.addComponent<Components::Health>(HEALTH_COMPONENT);
-    newGO.getComponent<Components::Health>(HEALTH_COMPONENT)->HP = 53;
-    std::cout << newGO.getComponent<Components::Health>(HEALTH_COMPONENT)->HP << std::endl;
     
 
     Engine::InitSystem();
     Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
 
-    ResourceManager::LoadTexture("../res/textures/dummy.png", "Dummy");
-
-    SDL_Rect rect;
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 800;
-    rect.h = 200;
+    ResourceManager::LoadTexture("../res/textures/dummy.png", "DummySheet");
+    ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy", 8, 1, 64);
 
     SDL_Event e;
+    int clip = 0;
     while(Renderer::IsWindowOpen()) {
         while(SDL_PollEvent(&e)) {
-            switch(e.type) {
-                case SDL_QUIT:
-                    Renderer::SetWindowOpen(false);
+            if(e.type == SDL_QUIT) {
+                Renderer::SetWindowOpen(false);
                 break;
             }
         }
         
         SDL_RenderClear(Renderer::GetRenderer());
-        SDL_RenderCopy(Renderer::GetRenderer(), ResourceManager::GetTexture("Dummy"), NULL, &rect);
+        ResourceManager::GetSprite("Dummy").Render(ResourceManager::GetSprite("Dummy").clips[clip].x,
+            ResourceManager::GetSprite("Dummy").clips[clip].y,
+            &ResourceManager::GetSprite("Dummy").clips[clip]);
+        
+        
         SDL_RenderPresent(Renderer::GetRenderer());
     }
 

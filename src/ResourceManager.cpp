@@ -5,6 +5,7 @@ using namespace Core;
 
 SDL_Renderer* ResourceManager::mainRenderer = NULL;
 std::map<std::string, SDL_Texture*> ResourceManager::Textures;
+std::map<std::string, Sprite> ResourceManager::Sprites;
 
 
 int ResourceManager::InitManager(SDL_Renderer *render) {
@@ -45,11 +46,29 @@ SDL_Texture* ResourceManager::LoadTexture(const std::string &path, const std::st
 
 }
 
+Sprite ResourceManager::LoadSpriteFromTexture(const std::string &textureName, const std::string &spriteName,
+    int clipRowCount, int clipColumnCount, int clipSize) {
+        
+
+    Sprite sprite(clipRowCount, clipColumnCount, clipSize, GetTexture(textureName));
+    Sprites.insert(std::pair<std::string, Sprite>(spriteName, sprite));
+
+    return Sprites.at(spriteName);
+}
+
 SDL_Texture* ResourceManager::GetTexture(const std::string &name) {
     return Textures.at(name);
 }
 
+Sprite ResourceManager::GetSprite(const std::string &name) {
+    return Sprites.at(name);
+}
+
 void ResourceManager::FreeMemory() {
+    
+    for(auto texture : Textures) {
+        SDL_DestroyTexture(texture.second);
+    }
     Textures.clear();
 }
 
