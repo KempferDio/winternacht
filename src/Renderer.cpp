@@ -21,13 +21,13 @@ bool Renderer::InitRenderer(const std::string &title,
     MainWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,
      SDL_WINDOWPOS_CENTERED, WindowWidth, WindowHeight, SDL_WINDOW_SHOWN);
     if(MainWindow == NULL) {
-        Log::makeNote("Window couldn't create");
+        Log::LogError("Window wasn't created");
         return false;
     }
 
     MainRenderer = SDL_CreateRenderer(MainWindow, -1, SDL_RENDERER_ACCELERATED);
     if(MainRenderer == NULL) {
-        Log::makeNote("Renderer couldn't create");
+        Log::LogError("Renderer wasn't created");
         return false;
     }
 

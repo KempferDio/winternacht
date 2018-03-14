@@ -4,3 +4,4 @@ bin
 res
 include/Later
 Description
+*.txt

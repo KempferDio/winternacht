@@ -13,7 +13,7 @@ int ResourceManager::InitManager(SDL_Renderer *render) {
 
     int imgFlag = IMG_INIT_PNG;
     if(!IMG_Init(imgFlag)) {
-        Log::makeNote("SDL_image couldn't init", "ResourceManager::InitManager");
+        Log::LogError("SDL_image can't init", "imgFlag was", imgFlag);
         return 1;
     }
 
@@ -28,13 +28,13 @@ SDL_Texture* ResourceManager::LoadTexture(const std::string &path, const std::st
     surface = IMG_Load(path.c_str());
     
     if(surface == NULL) {
-        Log::makeNote("Image couldn't load", "ResourceManager::LoadTexture");
+        Log::LogError("Image can't load", "Path was", path);
         return NULL;
     }
 
     texture = SDL_CreateTextureFromSurface(mainRenderer, surface);
     if(texture == NULL) {
-        Log::makeNote("Texture couldn't create from surface", "ResourceManager::LoadTexture");
+        Log::LogError("Texture can't create from surface");
         return NULL;
     }
 
