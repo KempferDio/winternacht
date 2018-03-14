@@ -8,7 +8,8 @@
 namespace Core {
     class InputManager {
         public:
-            Command* HandleInput();
+            
+            void HandleInput();
             
             template <class T>
             void SetButtonW(T newCommand) {
@@ -35,6 +36,7 @@ namespace Core {
             Command* button_D;
             
         private:
+            Command* GetCommand();
             
     };
 }

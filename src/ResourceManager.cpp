@@ -46,22 +46,22 @@ SDL_Texture* ResourceManager::LoadTexture(const std::string &path, const std::st
 
 }
 
-Sprite ResourceManager::LoadSpriteFromTexture(const std::string &textureName, const std::string &spriteName,
+Sprite* ResourceManager::LoadSpriteFromTexture(const std::string &textureName, const std::string &spriteName,
     int clipRowCount, int clipColumnCount, int clipSize) {
         
 
     Sprite sprite(clipRowCount, clipColumnCount, clipSize, GetTexture(textureName));
     Sprites.insert(std::pair<std::string, Sprite>(spriteName, sprite));
 
-    return Sprites.at(spriteName);
+    return &Sprites.at(spriteName);
 }
 
 SDL_Texture* ResourceManager::GetTexture(const std::string &name) {
     return Textures.at(name);
 }
 
-Sprite ResourceManager::GetSprite(const std::string &name) {
-    return Sprites.at(name);
+Sprite* ResourceManager::GetSprite(const std::string &name) {
+    return &Sprites.at(name);
 }
 
 void ResourceManager::FreeMemory() {

@@ -21,7 +21,7 @@ void InputManager::SetButtonD(T newCommand) {
     button_D = newCommand;
 }*/
 
-Command* InputManager::HandleInput() {
+Command* InputManager::GetCommand() {
    SDL_Event e;
     while(SDL_PollEvent(&e)) {
         if(e.type == SDL_QUIT) {
@@ -38,6 +38,13 @@ Command* InputManager::HandleInput() {
 
     return NULL;
 
+}
+
+void InputManager::HandleInput() {
+    Command* command = GetCommand();
+    if(command) {
+        command->execute();
+    }
 }
 
 void InputManager::Terminate() {

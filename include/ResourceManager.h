@@ -15,11 +15,11 @@ namespace Core {
 
             static int InitManager(SDL_Renderer *render);
             static SDL_Texture* LoadTexture(const std::string &path, const std::string &name);
-            static Sprite LoadSpriteFromTexture(const std::string &textureName, const std::string &spriteName,
+            static Sprite* LoadSpriteFromTexture(const std::string &textureName, const std::string &spriteName,
                 int clipRowCount, int clipColumnCount, int clipSize);
 
             static SDL_Texture* GetTexture(const std::string &name);
-            static Sprite GetSprite(const std::string &name);
+            static Sprite* GetSprite(const std::string &name);
 
             static void FreeMemory();
             static void Terminate();

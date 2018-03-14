@@ -7,12 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-#include <Game/GameObject.h>
-#include <Component.h>
-#include <Components/Health.h>
-
-#include <Command.h>
-#include <Commands/MakeLog.h>
+#include <GameObject.h>
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -29,37 +24,24 @@ int main() {
 #ifdef DEBUG
     Log::makeNote("Debug mode active!", "main");
 #endif
+
     Engine::InitSystem();
     Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
 
     ResourceManager::LoadTexture("../res/textures/dummy.png", "DummySheet");
     ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy", 8, 1, 64);
-    InputManager IM;
-
-    Commands::MakeLog *comm = new Commands::MakeLog;
-    IM.SetButtonW(comm);
- 
+    
+    GameObject object;
 
     while(Renderer::IsWindowOpen()) {
+        SDL_RenderClear(Renderer::GetRenderer());    
 
-        Command* command = IM.HandleInput();
-        if(command) {
-            command->execute();
-        }
         
-        SDL_RenderClear(Renderer::GetRenderer());
-
-        Renderer::Render(ResourceManager::GetSprite("Dummy").clips[0].x,
-            ResourceManager::GetSprite("Dummy").clips[0].y,
-            "DummySheet",
-            &ResourceManager::GetSprite("Dummy").clips[0]);
-
+        
         
         SDL_RenderPresent(Renderer::GetRenderer());
     }
-    delete comm;
-
 
     Renderer::Terminate();
     ResourceManager::Terminate();
