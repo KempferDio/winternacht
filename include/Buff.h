@@ -4,7 +4,7 @@
 namespace Core {
     class Buff {
     public:
-        
+        int Id;
     };
 }
 

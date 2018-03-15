@@ -6,7 +6,7 @@ using namespace Core;
     clipCount - count of images on texture board
     clipSize - size of image box on texture board
 */
-Sprite::Sprite(int clipRowCount, int clipColumnCount, int clipSize, SDL_Texture* texture) {
+Sprite::Sprite(int clipRowCount, int clipColumnCount, int clipSize, Texture* texture) {
     this->texture = texture;
     this->clipSize = clipSize;
     this->clipRowCount = clipRowCount;

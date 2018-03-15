@@ -47,9 +47,15 @@ void Renderer::SetWindowOpen(bool state) {
     IsOpen = state;
 }
 
-void Renderer::Render(int x, int y, const std::string &textureName, SDL_Rect *clip) {
-    SDL_Rect renderQuad = { x, y, clip->w, clip->h };
-    SDL_RenderCopy(GetRenderer(), ResourceManager::GetTexture(textureName), clip, &renderQuad);
+void Renderer::Render(const char* spriteName) {
+    Sprite *sprite = ResourceManager::GetSprite(spriteName);
+    SDL_RenderCopy(MainRenderer, sprite->texture->data, &sprite->clips[0], NULL);
+}
+//Note:
+//Clips first, position last
+void Renderer::Render(const char* spriteName, SDL_Rect position) {
+    Sprite *sprite = ResourceManager::GetSprite(spriteName);
+    SDL_RenderCopy(MainRenderer, sprite->texture->data, &sprite->clips[0], &position);
 }
 
 void Renderer::Terminate() {

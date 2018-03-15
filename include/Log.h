@@ -9,7 +9,7 @@
 #define MS_IN_SEC 1000
 #define DEFAULT_COLOR "\033[0m"
 #define BLUE_COLOR "\033[0;34m"
-#define MAGENTA_COLOR "\033[0;35m"
+#define CYAN_COLOR "\033[0;96m"
 #define YELLOW_COLOR "\033[0;33m"
 #define RED_COLOR "\033[0;31m"
 
@@ -18,10 +18,8 @@ namespace Core {
     public:
         static bool isLogFileWasCreated;
         static std::chrono::milliseconds startTime;
-        static void makeNote(const std::string &msg);
-        static void makeNote(const std::string &msg, const std::string &module);
 
-        //White
+
         template<typename T, typename... Args>
         static void LogInfo(T first, Args... args) {
             std::ostringstream stm;
@@ -35,12 +33,11 @@ namespace Core {
             LogInfo(args ...);
         }
 
-        //Orange
         template<typename T, typename... Args>
         static void LogDebug(T first, Args... args) {
             std::ostringstream stm;
             if(callCounter == 0) {
-                stm << GetCurrentTimeFromStart() << " [" << MAGENTA_COLOR << " DEBUG" << DEFAULT_COLOR << " ] ";
+                stm << GetCurrentTimeFromStart() << " [" << CYAN_COLOR << " DEBUG" << DEFAULT_COLOR << " ] ";
             }
             stm << first << " :: ";
             std::cout << stm.str();
@@ -49,7 +46,6 @@ namespace Core {
             LogDebug(args ...);
         }
 
-        //Yellow
         template<typename T, typename... Args>
         static void LogWarning(T first, Args... args) {
             std::ostringstream stm;
@@ -63,7 +59,6 @@ namespace Core {
             LogWarning(args ...);
         }
 
-        //Red
         template<typename T, typename... Args>
         static void LogError(T first, Args... args) {
             std::ostringstream stm;

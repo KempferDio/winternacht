@@ -4,7 +4,7 @@ using namespace Core;
 
 
 SDL_Renderer* ResourceManager::mainRenderer = NULL;
-std::map<std::string, SDL_Texture*> ResourceManager::Textures;
+std::map<std::string, Texture> ResourceManager::Textures;
 std::map<std::string, Sprite> ResourceManager::Sprites;
 
 
@@ -20,33 +20,40 @@ int ResourceManager::InitManager(SDL_Renderer *render) {
     return 0;
 }
 
-SDL_Texture* ResourceManager::LoadTexture(const std::string &path, const std::string &name) {
+Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
 
-    SDL_Texture *texture;
+    
     SDL_Surface *surface;
 
-    surface = IMG_Load(path.c_str());
+    surface = IMG_Load(path);
     
     if(surface == NULL) {
         Log::LogError("Image can't load", "Path was", path);
         return NULL;
     }
+    SDL_Rect rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = surface->w;
+    rect.h = surface->h;
 
-    texture = SDL_CreateTextureFromSurface(mainRenderer, surface);
-    if(texture == NULL) {
+    Texture texture(name, rect, SDL_CreateTextureFromSurface(mainRenderer, surface));
+
+    texture.data = SDL_CreateTextureFromSurface(mainRenderer, surface);
+    if(texture.data == NULL) {
         Log::LogError("Texture can't create from surface");
         return NULL;
     }
 
     SDL_FreeSurface(surface);
 
-    Textures.insert(std::pair<std::string, SDL_Texture*>(name, texture));
+    Textures.insert(std::pair<std::string, Texture>(name, texture));
 
-    return texture;
+    return &Textures.at(name);
 
 }
 
-Sprite* ResourceManager::LoadSpriteFromTexture(const std::string &textureName, const std::string &spriteName,
+Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const char* spriteName,
     int clipRowCount, int clipColumnCount, int clipSize) {
         
 
@@ -56,20 +63,37 @@ Sprite* ResourceManager::LoadSpriteFromTexture(const std::string &textureName, c
     return &Sprites.at(spriteName);
 }
 
-SDL_Texture* ResourceManager::GetTexture(const std::string &name) {
-    return Textures.at(name);
+Texture* ResourceManager::GetTexture(const char* name) {
+    Texture texture;
+    try {
+        texture = Textures.at(name);
+    } catch(std::out_of_range e) {
+        Log::LogError("This texture is not exist");
+        return NULL;
+    }
+
+    return &Textures.at(name);
 }
 
-Sprite* ResourceManager::GetSprite(const std::string &name) {
+Sprite* ResourceManager::GetSprite(const char* name) {
+    try {
+        Sprite sprite;
+        sprite = Sprites.at(name);
+    } catch(std::out_of_range e) {
+        Log::LogError("This sprite is not exist");
+        return NULL;
+    }
+
     return &Sprites.at(name);
 }
 
 void ResourceManager::FreeMemory() {
     
     for(auto texture : Textures) {
-        SDL_DestroyTexture(texture.second);
+        SDL_DestroyTexture(texture.second.data);
     }
     Textures.clear();
+    Sprites.clear();
 }
 
 void ResourceManager::Terminate() {
