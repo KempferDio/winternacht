@@ -37,8 +37,10 @@ int main(int argc, char** argv) {
     ResourceManager::InitManager(Renderer::GetRenderer());
     ResourceManager::LoadTexture("res/textures/dummy.png", "DummySheet");
     ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy", 8, 1, 64);
-    
-    GameObject object;
+    ResourceManager::CreateGameObject("Dummy", "Dummy");
+
+    ResourceManager::GetGameObject("Dummy")->setPosition(60, 35);
+    ResourceManager::GetGameObject("Dummy")->setSize(64, 64);
 
     SDL_Event e;
     while(Renderer::IsWindowOpen()) {
@@ -48,8 +50,22 @@ int main(int argc, char** argv) {
             if(e.type == SDL_QUIT) {
                 Renderer::SetWindowOpen(false);
             }
-        }
 
+            else if(e.type == SDL_KEYDOWN) {
+                if(e.key.keysym.sym == SDLK_w) {
+                    ResourceManager::GetGameObject("Dummy")->addPosition(0, -1);
+                }
+                if(e.key.keysym.sym == SDLK_a) {
+                    ResourceManager::GetGameObject("Dummy")->addPosition(-1, 0);
+                }
+                if(e.key.keysym.sym == SDLK_s) {
+                    ResourceManager::GetGameObject("Dummy")->addPosition(0, 1);
+                }
+                if(e.key.keysym.sym == SDLK_d) {
+                    ResourceManager::GetGameObject("Dummy")->addPosition(1, 0);
+                }
+            } 
+        }
 
         Renderer::Render("Dummy");
 

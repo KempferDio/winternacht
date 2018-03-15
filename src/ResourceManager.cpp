@@ -6,7 +6,7 @@ using namespace Core;
 SDL_Renderer* ResourceManager::mainRenderer = NULL;
 std::map<std::string, Texture> ResourceManager::Textures;
 std::map<std::string, Sprite> ResourceManager::Sprites;
-
+std::map<std::string, GameObject> ResourceManager::GameObjects;
 
 int ResourceManager::InitManager(SDL_Renderer *render) {
     mainRenderer = render;
@@ -20,6 +20,14 @@ int ResourceManager::InitManager(SDL_Renderer *render) {
     return 0;
 }
 
+//Game object
+GameObject* ResourceManager::CreateGameObject(const char* name, const char* spriteName) {
+    GameObject go(GetSprite(spriteName));
+    GameObjects.insert(std::pair<std::string, GameObject>(name, go));
+    return &GameObjects.at(name);
+}
+
+//Texture
 Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
 
     
@@ -53,6 +61,7 @@ Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
 
 }
 
+//Sprite
 Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const char* spriteName,
     int clipRowCount, int clipColumnCount, int clipSize) {
         
@@ -87,6 +96,17 @@ Sprite* ResourceManager::GetSprite(const char* name) {
     return &Sprites.at(name);
 }
 
+GameObject* ResourceManager::GetGameObject(const char* name) {
+    try {
+        GameObject go;
+        go = GameObjects.at(name);
+    } catch(std::out_of_range e) {
+        Log::LogError("This game object is not exist");
+        return NULL;
+    }
+    return &GameObjects.at(name);
+}
+
 void ResourceManager::FreeMemory() {
     
     for(auto texture : Textures) {
@@ -94,6 +114,7 @@ void ResourceManager::FreeMemory() {
     }
     Textures.clear();
     Sprites.clear();
+    GameObjects.clear();
 }
 
 void ResourceManager::Terminate() {

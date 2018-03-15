@@ -47,15 +47,12 @@ void Renderer::SetWindowOpen(bool state) {
     IsOpen = state;
 }
 
-void Renderer::Render(const char* spriteName) {
-    Sprite *sprite = ResourceManager::GetSprite(spriteName);
-    SDL_RenderCopy(MainRenderer, sprite->texture->data, &sprite->clips[0], NULL);
-}
 //Note:
 //Clips first, position last
-void Renderer::Render(const char* spriteName, SDL_Rect position) {
-    Sprite *sprite = ResourceManager::GetSprite(spriteName);
-    SDL_RenderCopy(MainRenderer, sprite->texture->data, &sprite->clips[0], &position);
+void Renderer::Render(const char* gameObjectName) {
+    GameObject *gameObject = ResourceManager::GetGameObject(gameObjectName);
+    SDL_RenderCopy(MainRenderer, gameObject->sprite->texture->data,
+        &gameObject->sprite->clips[0], &gameObject->rect);
 }
 
 void Renderer::Terminate() {
