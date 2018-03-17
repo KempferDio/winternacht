@@ -33,12 +33,7 @@ int main(int argc, char** argv) {
 #endif
     int x = 2;
     int y = 24;
-    std::string shit = "343";
-    Log::LogInfo("That shit is great", x, y, shit, 43 , 54);
-    Log::LogWarning("Shet", 34, 353, 36, 54.5);
-    Log::LogError("That shit is great", x, y, shit);
-    Log::LogDebug("That shit is great", x, y, shit);
-
+    
     Engine::InitSystem();
     Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
