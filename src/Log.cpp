@@ -4,18 +4,6 @@ using namespace Core;
 using namespace std::chrono;
 int Log::callCounter = 0;
 
-void Log::makeNote(const std::string &msg) {
-    std::ostringstream stm;
-    stm << GetCurrentTimeFromStart() / MS_IN_SEC << " :: " << msg << "\n";
-    RecordIntoLogFile(stm.str());
-}
-
-void Log::makeNote(const std::string &msg, const std::string &module) {
-    std::ostringstream stm;
-    stm << GetCurrentTimeFromStart() / MS_IN_SEC << " :: " << msg << " :: " << module << "\n";
-    RecordIntoLogFile(stm.str());
-}
-
 void Log::RecordIntoLogFile(std::string fullMsg) {
     std::ofstream logFile;
     if(!isLogFileWasCreated) {
