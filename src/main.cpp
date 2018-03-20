@@ -64,6 +64,12 @@ int main(int argc, char** argv) {
                 if(e.key.keysym.sym == SDLK_d) {
                     ResourceManager::GetGameObject("Dummy")->addPosition(1, 0);
                 }
+                if(e.key.keysym.sym == SDLK_e) {
+                    ResourceManager::GetGameObject("Dummy")->addSize(1, 1);
+                }
+                if(e.key.keysym.sym == SDLK_q) {
+                    ResourceManager::GetGameObject("Dummy")->addSize(-1, -1);
+                }
             } 
         }
 
