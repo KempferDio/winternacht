@@ -15,17 +15,19 @@
 
 using namespace Core;
 
-
 bool Log::isLogFileWasCreated = false;
 std::chrono::milliseconds Log::startTime =
- std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
-int main(int argc, char** argv) {
-    
+int main(int argc, char **argv)
+{
+
 #ifdef DEBUG
     Log::LogDebug("Debug mod is active");
-    if(argc > 1 && std::string(argv[1]) == "-xterm") {
-        if(::execl("/usr/bin/xterm", "xterm", "-e", argv[0], (char*)NULL)) {
+    if (argc > 1 && std::string(argv[1]) == "-xterm")
+    {
+        if (::execl("/usr/bin/xterm", "xterm", "-e", argv[0], (char *)NULL))
+        {
             std::perror("execl");
             return 1;
         }
@@ -43,34 +45,44 @@ int main(int argc, char** argv) {
     ResourceManager::GetGameObject("Dummy")->setSize(64, 64);
 
     SDL_Event e;
-    while(Renderer::IsWindowOpen()) {
-        SDL_RenderClear(Renderer::GetRenderer());    
+    while (Renderer::IsWindowOpen())
+    {
+        SDL_RenderClear(Renderer::GetRenderer());
 
-        while(SDL_PollEvent(&e)) {
-            if(e.type == SDL_QUIT) {
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+            {
                 Renderer::SetWindowOpen(false);
             }
 
-            else if(e.type == SDL_KEYDOWN) {
-                if(e.key.keysym.sym == SDLK_w) {
+            else if (e.type == SDL_KEYDOWN)
+            {
+                if (e.key.keysym.sym == SDLK_w)
+                {
                     ResourceManager::GetGameObject("Dummy")->addPosition(0, -1);
                 }
-                if(e.key.keysym.sym == SDLK_a) {
+                if (e.key.keysym.sym == SDLK_a)
+                {
                     ResourceManager::GetGameObject("Dummy")->addPosition(-1, 0);
                 }
-                if(e.key.keysym.sym == SDLK_s) {
+                if (e.key.keysym.sym == SDLK_s)
+                {
                     ResourceManager::GetGameObject("Dummy")->addPosition(0, 1);
                 }
-                if(e.key.keysym.sym == SDLK_d) {
+                if (e.key.keysym.sym == SDLK_d)
+                {
                     ResourceManager::GetGameObject("Dummy")->addPosition(1, 0);
                 }
-                if(e.key.keysym.sym == SDLK_e) {
+                if (e.key.keysym.sym == SDLK_e)
+                {
                     ResourceManager::GetGameObject("Dummy")->addSize(1, 1);
                 }
-                if(e.key.keysym.sym == SDLK_q) {
+                if (e.key.keysym.sym == SDLK_q)
+                {
                     ResourceManager::GetGameObject("Dummy")->addSize(-1, -1);
                 }
-            } 
+            }
         }
 
         Renderer::Render("Dummy");

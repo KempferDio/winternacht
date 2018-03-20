@@ -36,7 +36,7 @@ Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
     surface = IMG_Load(path);
     
     if(surface == NULL) {
-        Log::LogError("Image can't load", "Path was", path);
+        Log::LogError("Image can't load", "Path", path);
         return NULL;
     }
     SDL_Rect rect;
