@@ -17,6 +17,11 @@ namespace Core {
         GameObject(Sprite *sprite);
         GameObject(Sprite *sprite, SDL_Rect rect);
         
+        //
+        ~GameObject() {
+            Log::LogInfo("Object was destroyed");
+        }
+        
         SDL_Rect rect;
         Sprite *sprite;
         
@@ -28,6 +33,7 @@ namespace Core {
         void addPosition(int x, int y);
         void addSize(int w, int h);
         int getID();
+
     private:
         GameObjectState currentState;
         int ID;

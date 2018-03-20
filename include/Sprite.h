@@ -13,12 +13,17 @@ namespace Core {
     class Sprite {
         public:
             Sprite() {}
+            Sprite(Texture* texture);
             Sprite(int clipRowCount, int clipColumnCount, int clipSize, Texture* texture);
+            Sprite(int clipRowCount, int clipColumnCount, int clipWidth, int clipHeight, Texture* texture);
             ~Sprite();
 
             int clipRowCount;
             int clipColumnCount;
             int clipSize;
+
+            int clipWidth;
+            int clipHeight;
             std::vector<SDL_Rect> clips;
             Texture *texture;
 
