@@ -23,6 +23,7 @@ namespace Core {
                 int clipRowCount, int clipColumnCount, int clipSize);
             static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName,
                 int clipRowCount, int clipColumnCount, int clipWidth, int clipHeight);
+            static Sprite* LoadSpriteFromTexture(const char* spriteName, const char* textureName);
 
             static Texture* GetTexture(const char* name);
             static Sprite* GetSprite(const char* name);

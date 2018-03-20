@@ -80,6 +80,13 @@ Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const ch
     return &Sprites.at(spriteName);
 }
 
+Sprite* ResourceManager::LoadSpriteFromTexture(const char* spriteName, const char* textureName) {
+    Sprite sprite(GetTexture(textureName));
+    Sprites.insert(std::pair<std::string, Sprite>(spriteName, sprite));
+
+    return &Sprites.at(spriteName);
+}
+
 Texture* ResourceManager::GetTexture(const char* name) {
     Texture texture;
     try {

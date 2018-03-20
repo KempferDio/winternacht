@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
     ResourceManager::LoadTexture("res/textures/dummy.png", "DummySheet");
-    ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy", 8, 1, 64);
+    ResourceManager::LoadSpriteFromTexture("Dummy", "DummySheet");
     ResourceManager::CreateGameObject("Dummy", "Dummy");
 
     ResourceManager::GetGameObject("Dummy")->setPosition(60, 35);
