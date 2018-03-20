@@ -72,6 +72,14 @@ Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const ch
     return &Sprites.at(spriteName);
 }
 
+Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const char* spriteName,
+    int clipRowCount, int clipColumnCount, int clipWidth, int clipHeight) {
+    Sprite sprite(clipRowCount, clipColumnCount, clipWidth, clipHeight, GetTexture(textureName));
+    Sprites.insert(std::pair<std::string, Sprite>(spriteName, sprite));
+
+    return &Sprites.at(spriteName);
+}
+
 Texture* ResourceManager::GetTexture(const char* name) {
     Texture texture;
     try {

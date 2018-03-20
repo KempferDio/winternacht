@@ -21,6 +21,8 @@ namespace Core {
             static Texture* LoadTexture(const char* path, const char* name);
             static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName,
                 int clipRowCount, int clipColumnCount, int clipSize);
+            static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName,
+                int clipRowCount, int clipColumnCount, int clipWidth, int clipHeight);
 
             static Texture* GetTexture(const char* name);
             static Sprite* GetSprite(const char* name);
@@ -31,6 +33,7 @@ namespace Core {
 
             
         private:
+            ResourceManager() {}
             //SDL textures requires pointer to renderer
             // if they creates from surface.
             static SDL_Renderer* mainRenderer;

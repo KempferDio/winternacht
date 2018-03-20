@@ -5,3 +5,5 @@ res
 include/Later
 Description
 *.txt
+SDL2
+lib/
