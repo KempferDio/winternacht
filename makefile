@@ -5,7 +5,7 @@ OBJ = obj
 BIN = bin
 
 CFLAGS = -c -Wall -DDEBUG -std=c++11
-LFLAGS = -lSDL2main -lSDL2  -lSDL2_image
+LFLAGS =  -lSDL2  -lSDL2_image
 INCLUDE = include
 LIB = -L/usr/local/lib -L/usr/lib
 
@@ -40,7 +40,7 @@ all: $(BIN)/$(TARGET)
 compile: $(OBJS)
 
 $(BIN)/$(TARGET) : $(OBJS)
-	$(CC) $^ -I$(INCLUDE)  $(LIB) -o $@
+	$(CC) $^ -I$(INCLUDE) $(LFLAGS) $(LIB) -o $@
 
 $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CC) $< -I$(INCLUDE) $(LIB) $(CFLAGS) -o $@

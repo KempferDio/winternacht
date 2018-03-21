@@ -12,9 +12,9 @@
 namespace Core {
     class ResourceManager {
         public:
-            static std::map<std::string, Texture> Textures;
-            static std::map<std::string, Sprite> Sprites;
-            static std::map<std::string, GameObject> GameObjects;
+            static std::map<std::string, Texture*> Textures;
+            static std::map<std::string, Sprite*> Sprites;
+            static std::map<std::string, GameObject*> GameObjects;
 
             static int InitManager(SDL_Renderer *render);
             static GameObject* CreateGameObject(const char* name, const char* spriteName);
