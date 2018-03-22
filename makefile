@@ -43,16 +43,16 @@ $(BIN)/$(TARGET) : $(OBJS)
 	$(CC) $^ -I$(INCLUDE) $(LFLAGS) $(LIB) -o $@
 
 $(OBJ)/%.o : $(SRC)/%.cpp
-	$(CC) $< -I$(INCLUDE) $(LIB) $(CFLAGS) -o $@
+	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
 
 $(OBJ)/Game/%.o : $(SRC)/Game/%.cpp
-	$(CC) $< -I$(INCLUDE) $(LIB) $(CFLAGS) -o $@
+	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
 
 $(OBJ)/%.o : $(SRC)/%.c
-	$(CC) $< -I$(INCLUDE) $(LIB) $(CFLAGS) -o $@
+	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
 
 $(OBJ)/Game/%.o : $(SRC)/Game/%.c
-	$(CC) $< -I$(INCLUDE) $(LIB) $(CFLAGS) -o $@
+	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
 
 clear:
 	$(DELETE)

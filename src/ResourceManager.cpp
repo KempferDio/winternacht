@@ -30,7 +30,6 @@ GameObject* ResourceManager::CreateGameObject(const char* name, const char* spri
 //Texture
 Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
 
-    
     SDL_Surface *surface;
 
     surface = IMG_Load(path);
@@ -58,7 +57,6 @@ Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
     Textures.insert(std::pair<std::string, Texture*>(name, texture));
 
     return Textures.at(name);
-
 }
 
 //Sprite
@@ -88,7 +86,6 @@ Texture* ResourceManager::GetTexture(const char* name) {
         Log::LogError("This texture is not exist");
         return NULL;
     }
-
     return texture;
 }
 
@@ -100,7 +97,6 @@ Sprite* ResourceManager::GetSprite(const char* name) {
         Log::LogError("This sprite is not exist");
         return NULL;
     }
-
     return sprite;
 }
 

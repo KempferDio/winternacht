@@ -30,8 +30,7 @@ namespace Core {
 
             static void FreeMemory();
             static void Terminate();
-
-            
+                        
         private:
             ResourceManager() {}
             //SDL textures requires pointer to renderer
