@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     Engine::InitSystem();
     Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
-    ResourceManager::LoadTexture("res/textures/dummy.png", "DummySheet");
+    ResourceManager::LoadTexture("res/textures/Dummy.png", "DummySheet");
     ResourceManager::LoadSpriteFromTexture("Dummy", "DummySheet");
     ResourceManager::CreateGameObject("Dummy", "Dummy");
 
