@@ -12,9 +12,9 @@
 namespace Core {
     class ResourceManager {
         public:
-            static std::map<std::string, Texture> Textures;
-            static std::map<std::string, Sprite> Sprites;
-            static std::map<std::string, GameObject> GameObjects;
+            static std::map<std::string, Texture*> Textures;
+            static std::map<std::string, Sprite*> Sprites;
+            static std::map<std::string, GameObject*> GameObjects;
 
             static int InitManager(SDL_Renderer *render);
             static GameObject* CreateGameObject(const char* name, const char* spriteName);
@@ -23,7 +23,7 @@ namespace Core {
                 int clipRowCount, int clipColumnCount, int clipSize);
             static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName,
                 int clipRowCount, int clipColumnCount, int clipWidth, int clipHeight);
-            static Sprite* LoadSpriteFromTexture(const char* spriteName, const char* textureName);
+            static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName);
 
             static Texture* GetTexture(const char* name);
             static Sprite* GetSprite(const char* name);
@@ -31,8 +31,7 @@ namespace Core {
 
             static void FreeMemory();
             static void Terminate();
-
-            
+                        
         private:
             ResourceManager() {}
             //SDL textures requires pointer to renderer

@@ -4,6 +4,7 @@
 #include <Command.h>
 #include <SDL2/SDL.h>
 #include <Renderer.h>
+#include <vector>
 
 namespace Core {
     class InputManager {
@@ -36,6 +37,8 @@ namespace Core {
             Command* button_D;
             
         private:
+            
+            std::vector<Command*> commandQueue;
             Command* GetCommand();
             
     };

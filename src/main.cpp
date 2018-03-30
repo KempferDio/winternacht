@@ -7,11 +7,7 @@
 #include <chrono>
 #include <SDL2/SDL_image.h>
 #include <iostream>
-
 #include <GameObject.h>
-
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 800
 
 using namespace Core;
 
@@ -35,10 +31,8 @@ int main(int argc, char **argv)
 #endif
 
     Engine::InitSystem();
-    Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
-    ResourceManager::InitManager(Renderer::GetRenderer());
     ResourceManager::LoadTexture("res/textures/Dummy.png", "DummySheet");
-    ResourceManager::LoadSpriteFromTexture("Dummy", "DummySheet");
+    ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy");
     ResourceManager::CreateGameObject("Dummy", "Dummy");
 
     ResourceManager::GetGameObject("Dummy")->setPosition(60, 35);
@@ -90,9 +84,6 @@ int main(int argc, char **argv)
         SDL_RenderPresent(Renderer::GetRenderer());
     }
 
-    ResourceManager::FreeMemory();
-    ResourceManager::Terminate();
-    Renderer::Terminate();
     Engine::Terminate();
 
     return 0;
