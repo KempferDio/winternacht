@@ -4,6 +4,8 @@
 #include <Render/Sprite.h>
 #include <Render/Texture.h>
 #include <GameObjects/GameObject.h>
+#include <GameObjects/Pawn.h>
+#include <GameObjects/Tile.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <map>
@@ -14,10 +16,12 @@ namespace Core {
         public:
             static std::map<std::string, Texture*> Textures;
             static std::map<std::string, Sprite*> Sprites;
-            static std::map<std::string, GameObject*> GameObjects;
+            static std::map<std::string, GameObjects::Pawn*> Pawns;
+            static std::map<std::string, GameObjects::Tile*> Tiles;
 
             static int InitManager(SDL_Renderer *render);
-            static GameObject* CreateGameObject(const char* name, const char* spriteName);
+
+
             static Texture* LoadTexture(const char* path, const char* name);
             static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName,
                 int clipRowCount, int clipColumnCount, int clipSize);
@@ -25,9 +29,15 @@ namespace Core {
                 int clipRowCount, int clipColumnCount, int clipWidth, int clipHeight);
             static Sprite* LoadSpriteFromTexture(const char* textureName, const char* spriteName);
 
+            //static GameObject* CreateGameObject(const char* name, const char* spriteName);
+            static GameObjects::Pawn* CreatePawn(const char* name, const char* spriteName);
+            static GameObjects::Tile* CreateTile(const char* name, const char* spriteName);
+
             static Texture* GetTexture(const char* name);
             static Sprite* GetSprite(const char* name);
-            static GameObject* GetGameObject(const char* name);
+            //static GameObject* GetGameObject(const char* name);
+            static GameObjects::Pawn* GetPawn(const char* name);
+            static GameObjects::Tile* GetTile(const char* name);
 
             static void FreeMemory();
             static void Terminate();

@@ -2,6 +2,6 @@
 
 using namespace Core;
 
-void JumpCommand::execute(GameObject* actor) {
+void JumpCommand::execute(GameObjects::Pawn* actor) {
     actor->Jump();
 }

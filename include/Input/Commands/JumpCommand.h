@@ -6,7 +6,7 @@ namespace Core {
     class JumpCommand : public Command {
     public:
         JumpCommand() {}
-        void execute(GameObject *actor);
+        void execute(GameObjects::Pawn *actor);
     };
 }
 

@@ -49,10 +49,19 @@ void Renderer::SetWindowOpen(bool state) {
 
 //Note:
 //Clips first, position last
-void Renderer::Render(const char* gameObjectName) {
-    GameObject *gameObject = ResourceManager::GetGameObject(gameObjectName);
+void Renderer::Render(const char* pawnName) {
+    GameObject *gameObject = ResourceManager::GetPawn(pawnName);
     SDL_RenderCopy(MainRenderer, gameObject->sprite->texture->data,
         &gameObject->sprite->clips[0], &gameObject->rect);
+}
+
+/**
+ * For test
+*/
+void Renderer::RenderTile(const char* tileName) {
+    GameObjects::Tile *tile = ResourceManager::GetTile(tileName);
+    SDL_RenderCopy(MainRenderer, tile->sprite->texture->data,
+        &tile->sprite->clips[0], &tile->rect);
 }
 
 void Renderer::Terminate() {

@@ -7,7 +7,7 @@ int Engine::InitSystem() {
         Log::LogError("SDL can't init");
         return 1;
     }
-
+    
     Renderer::InitRenderer(APP_NAME, SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::InitManager(Renderer::GetRenderer());
     return 0;

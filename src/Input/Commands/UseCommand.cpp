@@ -2,6 +2,6 @@
 
 using namespace Core;
 
-void UseCommand::execute(GameObject* actor) {
+void UseCommand::execute(GameObjects::Pawn* actor) {
     actor->Use();
 }

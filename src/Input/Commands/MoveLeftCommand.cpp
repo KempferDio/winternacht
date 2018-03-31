@@ -2,6 +2,6 @@
 
 using namespace Core;
 
-void MoveLeftCommand::execute(GameObject* actor) {
+void MoveLeftCommand::execute(GameObjects::Pawn* actor) {
     actor->MoveLeft();
 }

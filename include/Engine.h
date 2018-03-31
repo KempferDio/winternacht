@@ -9,6 +9,7 @@
 #include <Render/Renderer.h>
 #include <ResourceManager.h>
 #include <Input/InputManager.h>
+#include <Physics/PhysicsManager.h>
 #include <Log.h>
 
 

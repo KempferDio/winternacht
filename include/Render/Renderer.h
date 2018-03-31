@@ -11,7 +11,8 @@ namespace Core {
             static bool InitRenderer(const std::string &title,
                     unsigned int width, unsigned int height);
 
-            static void Render(const char* gameObjectName);
+            static void Render(const char* pawnName);
+            static void RenderTile(const char* tileName);
 
             static SDL_Renderer* GetRenderer();
             static bool IsWindowOpen();

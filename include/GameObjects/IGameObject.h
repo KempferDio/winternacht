@@ -15,12 +15,6 @@ namespace Core {
         */
         IGameObject() {}
         virtual ~IGameObject() {}
-        
-        virtual void MoveLeft() = 0;
-        virtual void MoveRight() = 0;
-        virtual void Jump() = 0;
-        virtual void Use() = 0;
-        
     };
 }
 

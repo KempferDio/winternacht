@@ -6,7 +6,7 @@ namespace Core {
     class UseCommand : public Command {
     public:
         UseCommand() {}
-        void execute(GameObject* actor);
+        void execute(GameObjects::Pawn* actor);
     };
 }
 

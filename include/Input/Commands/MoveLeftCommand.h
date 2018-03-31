@@ -7,7 +7,7 @@ namespace Core {
     public:
 
         MoveLeftCommand() {}
-        void execute(GameObject *actor);
+        void execute(GameObjects::Pawn *actor);
     };
 }
 

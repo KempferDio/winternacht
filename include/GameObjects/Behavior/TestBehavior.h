@@ -12,23 +12,6 @@ namespace Core {
             Log::LogDebug("TestBehavior dtor");
         }
 
-        void MoveLeft() {
-            GameObjectDecorator::MoveLeft();
-        }
-        void MoveRight() {
-            GameObjectDecorator::MoveRight();
-            Log::LogDebug("Move right from TestBehavior");
-        }
-        void Jump() {
-            GameObjectDecorator::Jump();
-        }
-        void Use() {
-            GameObjectDecorator::Use();
-        }
-
-        void UnrealSkill() {
-            Log::LogDebug("From Test Behavior");
-        }
     };
 }
 

@@ -2,7 +2,7 @@
 
 using namespace Core;
 
-void MoveRightCommand::execute(GameObject* actor) {
+void MoveRightCommand::execute(GameObjects::Pawn* actor) {
     actor->MoveRight();
 }
 

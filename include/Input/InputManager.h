@@ -7,6 +7,7 @@
 #include <Log.h>
 
 #include <GameObjects/GameObject.h>
+#include <GameObjects/Pawn.h>
 
 #include <Input/CommandFactory.h>
 #include <Input/Command.h>
@@ -29,7 +30,7 @@ class InputManager
     static void SetButtonS(CommandsList command);
     static void SetButtonD(CommandsList command);
 
-    static void SetActor(GameObject* newActor);
+    static void SetActor(GameObjects::Pawn* newActor);
     //static void SetButton(Command *button, CommandsList command);
 
     static Command* button_W;
@@ -39,7 +40,7 @@ class InputManager
 
   private:
     //Actor, who would be executing all commands
-    static GameObject* actor;
+    static GameObjects::Pawn* actor;
     static std::queue<Command*> commandQueue;
 
     static void GetCommand();

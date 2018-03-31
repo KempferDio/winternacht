@@ -1,12 +1,13 @@
 #include <Input/InputManager.h>
 
 using namespace Core;
+using namespace GameObjects;
 
 Command* InputManager::button_W;
 Command* InputManager::button_A;
 Command* InputManager::button_S;
 Command* InputManager::button_D;
-GameObject* InputManager::actor;
+Pawn* InputManager::actor;
 std::queue<Command*> InputManager::commandQueue;
 
 /*void InputManager::SetButton(Command* button, CommandsList command) {
@@ -30,7 +31,7 @@ void InputManager::SetButtonD(CommandsList command) {
     button_D = CommandFactory::CreateCommand(command);
 }
 
-void InputManager::SetActor(GameObject* newActor) {
+void InputManager::SetActor(Pawn* newActor) {
     actor = newActor;
 }
 

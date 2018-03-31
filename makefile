@@ -33,6 +33,7 @@ SRCS += $(wildcard $(SRC)/Input/*.cpp)
 SRCS += $(wildcard $(SRC)/Input/Commands/*.cpp)
 SRCS += $(wildcard $(SRC)/GameObjects/*.cpp)
 SRCS += $(wildcard $(SRC)/Render/*.cpp)
+SRCS += $(wildcard $(SRC)/Physics/*.cpp)
 #Box2D
 SRCS += $(wildcard $(SRC)/Box2D/*.cpp)
 SRCS += $(wildcard $(SRC)/Box2D/Collision/*.cpp)
@@ -42,6 +43,7 @@ SRCS += $(wildcard $(SRC)/Box2D/Dynamic/*.cpp)
 SRCS += $(wildcard $(SRC)/Box2D/Dynamic/Contacts/*.cpp)
 SRCS += $(wildcard $(SRC)/Box2D/Dynamic/Joints/*.cpp)
 SRCS += $(wildcard $(SRC)/Box2D/Rope/*.cpp)
+
 
 
 OBJS = $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
@@ -93,6 +95,13 @@ $(OBJ)/%.o : $(SRC)/Render/%.cpp
 	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
 
 $(OBJ)/%.o : $(SRC)/Render/%.c
+	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
+
+#Physics
+$(OBJ)/%.o : $(SRC)/Physics/%.cpp
+	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
+
+$(OBJ)/%.o : $(SRC)/Physics/%.c
 	$(CC) $< -I$(INCLUDE) $(CFLAGS) -o $@
 
 clear:

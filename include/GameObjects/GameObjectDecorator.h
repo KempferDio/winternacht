@@ -18,13 +18,7 @@ namespace Core {
             delete interface;
         }
 
-        void MoveLeft() {}
-        void MoveRight() {
-            interface->MoveRight();
-            Log::LogDebug("Move right from GameObjectDecorator");
-        }
-        void Jump() {}
-        void Use() {}
+
 
     private:
         IGameObject* interface;

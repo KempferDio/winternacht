@@ -7,6 +7,7 @@
 #include <ResourceManager.h>
 #include <Render/Renderer.h>
 
+#include <Physics/PhysicsManager.h>
 
 #include <GameObjects/IGameObject.h>
 #include <GameObjects/GameObject.h>
@@ -81,13 +82,18 @@ int main(int argc, char **argv)
 
 
     Engine::InitSystem();
-    
+
+    PhysicsManager::InitWorldPhysics();
+
     ResourceManager::LoadTexture("res/textures/Dummy.png", "DummySheet");
     ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy");
-    ResourceManager::CreateGameObject("Dummy", "Dummy");
 
-    ResourceManager::GetGameObject("Dummy")->setPosition(60, 35);
-    ResourceManager::GetGameObject("Dummy")->setSize(64, 64);
+    ResourceManager::CreatePawn("Dummy", "Dummy");
+    ResourceManager::CreateTile("Box", "Dummy");
+    
+
+    ResourceManager::GetPawn("Dummy")->setPosition(60, 35);
+    ResourceManager::GetPawn("Dummy")->setSize(64, 64);
 
 
     InputManager::SetButtonW(CommandsList::CMD_JUMP);
@@ -95,17 +101,22 @@ int main(int argc, char **argv)
     InputManager::SetButtonS(CommandsList::CMD_USE);
     InputManager::SetButtonD(CommandsList::CMD_MOVE_RIGHT);
 
-    InputManager::SetActor(ResourceManager::GetGameObject("Dummy"));
+    InputManager::SetActor(ResourceManager::GetPawn("Dummy"));
 
     
     while (Renderer::IsWindowOpen())
     {
-        
         InputManager::HandleInput();
+
+        PhysicsManager::UpdateWorld();
+        
+        ResourceManager::GetPawn("Dummy")->Update();
+        
 
         SDL_RenderClear(Renderer::GetRenderer());
 
         Renderer::Render("Dummy");
+        Renderer::RenderTile("Box");
 
         SDL_RenderPresent(Renderer::GetRenderer());
     }

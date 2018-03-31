@@ -6,7 +6,8 @@ using namespace Core;
 SDL_Renderer* ResourceManager::mainRenderer = NULL;
 std::map<std::string, Texture*> ResourceManager::Textures;
 std::map<std::string, Sprite*> ResourceManager::Sprites;
-std::map<std::string, GameObject*> ResourceManager::GameObjects;
+std::map<std::string, GameObjects::Pawn*> ResourceManager::Pawns;
+std::map<std::string, GameObjects::Tile*> ResourceManager::Tiles;
 
 int ResourceManager::InitManager(SDL_Renderer *render) {
     mainRenderer = render;
@@ -20,11 +21,17 @@ int ResourceManager::InitManager(SDL_Renderer *render) {
     return 0;
 }
 
-//Game object
-GameObject* ResourceManager::CreateGameObject(const char* name, const char* spriteName) {
-    GameObject *go = new GameObject(GetSprite(spriteName));
-    GameObjects.insert(std::pair<std::string, GameObject*>(name, go));
-    return GameObjects.at(name);
+
+GameObjects::Pawn* ResourceManager::CreatePawn(const char* name, const char* spriteName) {
+    GameObjects::Pawn* pawn = new GameObjects::Pawn(GetSprite(spriteName));
+    Pawns.insert(std::pair<std::string, GameObjects::Pawn*>(name, pawn));
+    return Pawns.at(name);
+}
+
+GameObjects::Tile* ResourceManager::CreateTile(const char* name, const char* spriteName) {
+    GameObjects::Tile* tile = new GameObjects::Tile(GetSprite(spriteName));
+    Tiles.insert(std::pair<std::string, GameObjects::Tile*>(name, tile));
+    return Tiles.at(name);
 }
 
 //Texture
@@ -107,15 +114,29 @@ Sprite* ResourceManager::GetSprite(const char* name) {
     return sprite;
 }
 
-GameObject* ResourceManager::GetGameObject(const char* name) {
-    GameObject *go;
+
+GameObjects::Pawn* ResourceManager::GetPawn(const char* name) {
+    GameObjects::Pawn* pawn;
     try {
-        go = GameObjects.at(name);
+        pawn = Pawns.at(name);
     } catch(std::out_of_range e) {
-        Log::LogError("This game object is not exist");
+        Log::LogError("This pawn is not exist");
         return NULL;
     }
-    return go;
+
+    return pawn;
+}
+
+GameObjects::Tile* ResourceManager::GetTile(const char* name) {
+    GameObjects::Tile* tile;
+    try {
+        tile = Tiles.at(name);
+    } catch(std::out_of_range e) {
+        Log::LogError("This tile is not exist");
+        return NULL;
+    }
+
+    return tile;
 }
 
 void ResourceManager::FreeMemory() {
@@ -127,12 +148,17 @@ void ResourceManager::FreeMemory() {
     for(auto sprite : Sprites) {
         delete sprite.second;
     }
-    for(auto go : GameObjects) {
-        delete go.second;
+    for(auto pawn : Pawns) {
+        delete pawn.second;
+    }
+
+    for(auto tile : Tiles) {
+        delete tile.second;
     }
     Textures.clear();
     Sprites.clear();
-    GameObjects.clear();
+    Pawns.clear();
+    Tiles.clear();
 }
 
 void ResourceManager::Terminate() {

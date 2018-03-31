@@ -9,7 +9,7 @@ namespace Core {
 
         MoveRightCommand() {}
         ~MoveRightCommand() {}
-        void execute(GameObject *actor);
+        void execute(GameObjects::Pawn *actor);
     };
 }
 

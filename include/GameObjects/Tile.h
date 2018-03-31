@@ -1,7 +1,10 @@
 #ifndef TILE_H
 #define TILE_H
-#include <GameObject.h>
-
+#include <GameObjects/GameObject.h>
+#include <Render/Sprite.h>
+#include <SDL2/SDL.h>
+#include <Box2D/Box2D.h>
+#include <Physics/PhysicsManager.h>
 
 namespace Core {
     namespace GameObjects {
@@ -13,8 +16,14 @@ namespace Core {
 
         class Tile : public GameObject {
         public:
+            Tile();
+            Tile(Sprite *sprite);
+            Tile(Sprite *sprite, SDL_Rect rect);
             int Type;
             int Solidity;
+
+            b2Body* rigidBody;
+
         };
 
     }

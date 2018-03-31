@@ -10,7 +10,7 @@ namespace Core {
         MoveCommand() {}
         ~MoveCommand() {}
 
-        void execute(GameObject *actor);
+        void execute(GameObjects::Pawn *actor);
     private:
     };
 }

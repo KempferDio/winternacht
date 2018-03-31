@@ -18,17 +18,9 @@ namespace Core {
         GameObject();
         GameObject(Sprite *sprite);
         GameObject(Sprite *sprite, SDL_Rect rect);
-        
-        //
-        ~GameObject() {
-            Log::LogInfo("Object was destroyed");
-        }
 
-        void MoveLeft();
-        void MoveRight();
-        void Jump();
-        void Use();
-        
+        virtual ~GameObject() {}
+
         GameObjectState getCurrentState();
         void setSprite(Sprite *sprite);
         void setCurrentState(GameObjectState newState);
