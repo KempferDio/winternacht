@@ -7,3 +7,5 @@ Description
 *.txt
 SDL2
 lib/
+include/Box2D/
+src/Box2D/

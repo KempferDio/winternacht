@@ -1,23 +1,24 @@
 #include <unistd.h>
-#include <Engine.h>
-#include <ResourceManager.h>
-#include <Renderer.h>
-#include <InputManager.h>
-#include <Log.h>
 #include <chrono>
-#include <SDL2/SDL_image.h>
 #include <iostream>
 
-#include <GameObject.h>
+#include <Engine.h>
+#include <Log.h>
+#include <ResourceManager.h>
+#include <Render/Renderer.h>
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 800
+
+#include <GameObjects/IGameObject.h>
+#include <GameObjects/GameObject.h>
+#include <GameObjects/Behavior/TestBehavior.h>
+
+#include <Input/InputManager.h>
+#include <Input/CommandFactory.h>
+
+#include <Box2D/Box2D.h>
+#include <SDL2/SDL_image.h>
 
 using namespace Core;
-
-bool Log::isLogFileWasCreated = false;
-std::chrono::milliseconds Log::startTime =
-    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
 int main(int argc, char **argv)
 {
@@ -33,65 +34,82 @@ int main(int argc, char **argv)
         }
     }
 #endif
+
+   /* b2Vec2 gravity(0.0f, -10.0f);
+
+    b2World world(gravity);
+
+    //static body
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(0.0f, -10.0f);
+
+    b2Body* groundBody = world.CreateBody(&groundBodyDef);
+
+    b2PolygonShape groundBox;
+    groundBox.SetAsBox(50.0f, 10.0f);
+
+    groundBody->CreateFixture(&groundBox, 0.0f);
+
+    //dynamic body
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(0.0f, 4.0f);
+    b2Body* body = world.CreateBody(&bodyDef);
+
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(1.0f, 1.0f);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+
+    body->CreateFixture(&fixtureDef);
+    //
+
+    float32 timeStep = 1.0f / 60.0f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 2;
+
+    for(int32 i = 0; i < 60; i++) {
+        
+        world.Step(timeStep, velocityIterations, positionIterations);
+        b2Vec2 position = body->GetPosition();
+        float32 angle = body->GetAngle();
+        printf("%4.2f, %4.2f, %4.2f\n", position.x, position.y, angle);
+    }*/
+
+
     Engine::InitSystem();
-    Renderer::InitRenderer("Winternacht", SCREEN_WIDTH, SCREEN_HEIGHT);
-    ResourceManager::InitManager(Renderer::GetRenderer());
-    ResourceManager::LoadTexture("res/textures/dummy.png", "DummySheet");
-    ResourceManager::LoadSpriteFromTexture("Dummy", "DummySheet");
+    
+    ResourceManager::LoadTexture("res/textures/Dummy.png", "DummySheet");
+    ResourceManager::LoadSpriteFromTexture("DummySheet", "Dummy");
     ResourceManager::CreateGameObject("Dummy", "Dummy");
 
     ResourceManager::GetGameObject("Dummy")->setPosition(60, 35);
     ResourceManager::GetGameObject("Dummy")->setSize(64, 64);
 
-    SDL_Event e;
+
+    InputManager::SetButtonW(CommandsList::CMD_JUMP);
+    InputManager::SetButtonA(CommandsList::CMD_MOVE_LEFT);
+    InputManager::SetButtonS(CommandsList::CMD_USE);
+    InputManager::SetButtonD(CommandsList::CMD_MOVE_RIGHT);
+
+    InputManager::SetActor(ResourceManager::GetGameObject("Dummy"));
+
+    
     while (Renderer::IsWindowOpen())
     {
+        
+        InputManager::HandleInput();
+
         SDL_RenderClear(Renderer::GetRenderer());
-
-        while (SDL_PollEvent(&e))
-        {
-            if (e.type == SDL_QUIT)
-            {
-                Renderer::SetWindowOpen(false);
-            }
-
-            else if (e.type == SDL_KEYDOWN)
-            {
-                if (e.key.keysym.sym == SDLK_w)
-                {
-                    ResourceManager::GetGameObject("Dummy")->addPosition(0, -1);
-                }
-                if (e.key.keysym.sym == SDLK_a)
-                {
-                    ResourceManager::GetGameObject("Dummy")->addPosition(-1, 0);
-                }
-                if (e.key.keysym.sym == SDLK_s)
-                {
-                    ResourceManager::GetGameObject("Dummy")->addPosition(0, 1);
-                }
-                if (e.key.keysym.sym == SDLK_d)
-                {
-                    ResourceManager::GetGameObject("Dummy")->addPosition(1, 0);
-                }
-                if (e.key.keysym.sym == SDLK_e)
-                {
-                    ResourceManager::GetGameObject("Dummy")->addSize(1, 1);
-                }
-                if (e.key.keysym.sym == SDLK_q)
-                {
-                    ResourceManager::GetGameObject("Dummy")->addSize(-1, -1);
-                }
-            }
-        }
 
         Renderer::Render("Dummy");
 
         SDL_RenderPresent(Renderer::GetRenderer());
     }
 
-    ResourceManager::FreeMemory();
-    ResourceManager::Terminate();
-    Renderer::Terminate();
     Engine::Terminate();
 
     return 0;

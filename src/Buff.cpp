@@ -1,15 +1,13 @@
-#ifndef BUFF_H
-#define BUFF_H
+#include <Buff.h>
 
+using namespace Core;
 
-namespace Core {
-    class Buff {
-    public:
-        int Id;
-        int maxTime;
-        int currentTime;
-        
-    };
+Buff::Buff() {
+
 }
 
-#endif
+Buff::Buff(BaseInfo info, int maxTime, int interval) {
+    this->info = info;
+    this->maxTime = maxTime;
+    this->interval = interval;
+}

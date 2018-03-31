@@ -2,7 +2,7 @@
 #define SPRITE_H
 
 #include <Log.h>
-#include <Texture.h>
+#include <Render/Texture.h>
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
