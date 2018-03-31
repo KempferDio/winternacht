@@ -3,7 +3,7 @@
 #include <Log.h>
 #include <Sprite.h>
 #include <Texture.h>
-#include <GameObject.h>
+#include <GameObjects/GameObject.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <map>

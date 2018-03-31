@@ -12,6 +12,7 @@
 #define CYAN_COLOR "\033[0;96m"
 #define YELLOW_COLOR "\033[0;33m"
 #define RED_COLOR "\033[0;31m"
+using namespace std::chrono;
 
 namespace Core {
     class Log {
@@ -22,52 +23,36 @@ namespace Core {
 
         template<typename T, typename... Args>
         static void LogInfo(T first, Args... args) {
-            std::ostringstream stm;
-            if(callCounter == 0) {
-                stm << GetCurrentTimeFromStart() << " [" <<  BLUE_COLOR << " INFO" << DEFAULT_COLOR << " ] ";
-            }
-            stm << first << " :: ";
-            std::cout << stm.str();
-            RecordIntoLogFile(stm.str());
+            std::string msg = MakeMsg(BLUE_COLOR, "INFO", first).str();
+            std::cout << msg;
+            WriteIntoLogFile(msg);
             callCounter++;
             LogInfo(args ...);
         }
 
         template<typename T, typename... Args>
         static void LogDebug(T first, Args... args) {
-            std::ostringstream stm;
-            if(callCounter == 0) {
-                stm << GetCurrentTimeFromStart() << " [" << CYAN_COLOR << " DEBUG" << DEFAULT_COLOR << " ] ";
-            }
-            stm << first << " :: ";
-            std::cout << stm.str();
-            RecordIntoLogFile(stm.str());
+            std::string msg = MakeMsg(CYAN_COLOR, "DEBUG", first).str();
+            std::cout << msg;
+            WriteIntoLogFile(msg);
             callCounter++;
             LogDebug(args ...);
         }
 
         template<typename T, typename... Args>
         static void LogWarning(T first, Args... args) {
-            std::ostringstream stm;
-            if(callCounter == 0) {
-                stm << GetCurrentTimeFromStart() << " [" << YELLOW_COLOR << " WARNING" << DEFAULT_COLOR << " ] ";
-            }
-            stm << first << " :: ";
-            std::cout << stm.str();
-            RecordIntoLogFile(stm.str());
+            std::string msg = MakeMsg(YELLOW_COLOR, "WARNING", first).str();
+            std::cout << msg;
+            WriteIntoLogFile(msg);
             callCounter++;
             LogWarning(args ...);
         }
 
         template<typename T, typename... Args>
         static void LogError(T first, Args... args) {
-            std::ostringstream stm;
-            if(callCounter == 0) {
-                stm << GetCurrentTimeFromStart() << " [" << RED_COLOR << " ERROR" << DEFAULT_COLOR << " ] ";
-            }
-            stm << first << " :: ";
-            std::cout << stm.str();
-            RecordIntoLogFile(stm.str());
+            std::string msg = MakeMsg(RED_COLOR, "ERROR", first).str();
+            std::cout << msg;
+            WriteIntoLogFile(msg);
             callCounter++;
             LogError(args ...);
         }
@@ -89,18 +74,46 @@ namespace Core {
         }
         
     private:
-        static void RecordIntoLogFile(std::string fullMsg);
-        static float GetCurrentTimeFromStart();
+        static void WriteIntoLogFile(std::string fullMsg) {
+            std::ofstream logFile;
+            if(!isLogFileWasCreated) {
+                logFile.open(LOG_FILE_NAME, std::ios::trunc);
+                isLogFileWasCreated = true;
+            }
+            else {
+                logFile.open(LOG_FILE_NAME, std::fstream::app);
+            }
+
+            logFile << fullMsg;
+
+            logFile.close();
+        }
+
+        static float GetCurrentTimeFromStart() {
+            milliseconds ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+            auto diff = duration_cast<milliseconds>(ms - startTime);
+            float msgTime = diff.count();
+            return msgTime / MS_IN_SEC;
+        }
         static int callCounter;
 
         static void breakRecoursion() {
             callCounter = 0;
             std::cout << "\n";
-            RecordIntoLogFile("\n");
+            WriteIntoLogFile("\n");
+        }
+        template <typename T>
+        static std::ostringstream MakeMsg(std::string color, std::string msgType, T first) {
+            std::ostringstream stm;
+            if(callCounter == 0) {
+                stm << GetCurrentTimeFromStart() << " [" << color << " " << msgType << DEFAULT_COLOR << " ] ";
+            }
+            stm << first << " :: ";
+
+            return stm;
         }
     };
+
 }
-
-
 
 #endif

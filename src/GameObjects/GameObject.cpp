@@ -1,4 +1,4 @@
-#include <GameObject.h>
+#include <GameObjects/GameObject.h>
 
 using namespace Core;
 
