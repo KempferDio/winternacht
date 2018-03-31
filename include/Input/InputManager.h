@@ -1,8 +1,9 @@
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 #include <queue>
+#include <memory>
 #include <SDL2/SDL.h>
-#include <Renderer.h>
+#include <Render/Renderer.h>
 #include <Log.h>
 
 #include <GameObjects/GameObject.h>
@@ -31,10 +32,10 @@ class InputManager
     static void SetActor(GameObject* newActor);
     //static void SetButton(Command *button, CommandsList command);
 
-    static Command *button_W;
-    static Command *button_A;
-    static Command *button_S;
-    static Command *button_D;
+    static Command* button_W;
+    static Command* button_A;
+    static Command* button_S;
+    static Command* button_D;
 
   private:
     //Actor, who would be executing all commands

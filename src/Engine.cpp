@@ -16,6 +16,8 @@ int Engine::InitSystem() {
 void Engine::Terminate() {
     ResourceManager::FreeMemory();
     ResourceManager::Terminate();
+    InputManager::Terminate();
     Renderer::Terminate();
+    
     SDL_Quit();
 }

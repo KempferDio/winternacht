@@ -10,7 +10,7 @@ namespace Core {
         MoveCommand() {}
         ~MoveCommand() {}
 
-        virtual void execute(GameObject *actor);
+        void execute(GameObject *actor);
     private:
     };
 }

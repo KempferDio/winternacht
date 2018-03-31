@@ -6,9 +6,11 @@
 #define APP_NAME "Winternacht"
 
 #include <SDL2/SDL.h>
-#include <Renderer.h>
+#include <Render/Renderer.h>
 #include <ResourceManager.h>
+#include <Input/InputManager.h>
 #include <Log.h>
+
 
 namespace Core {
     class Engine {

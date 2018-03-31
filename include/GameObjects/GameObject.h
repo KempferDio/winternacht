@@ -2,7 +2,9 @@
 #define GAMEOBJECT_H
 #include <SDL2/SDL.h>
 #include <Log.h>
-#include <Sprite.h>
+#include <Render/Sprite.h>
+
+#include <GameObjects/IGameObject.h>
 
 namespace Core {
 
@@ -11,7 +13,7 @@ namespace Core {
         DEAD
     };
 
-    class GameObject {
+    class GameObject : public IGameObject {
     public:
         GameObject();
         GameObject(Sprite *sprite);
@@ -21,9 +23,11 @@ namespace Core {
         ~GameObject() {
             Log::LogInfo("Object was destroyed");
         }
-        
-        SDL_Rect rect;
-        Sprite *sprite;
+
+        void MoveLeft();
+        void MoveRight();
+        void Jump();
+        void Use();
         
         GameObjectState getCurrentState();
         void setSprite(Sprite *sprite);
@@ -33,6 +37,12 @@ namespace Core {
         void addPosition(int x, int y);
         void addSize(int w, int h);
         int getID();
+
+        /**
+         * 
+        */
+        SDL_Rect rect;
+        Sprite *sprite;
 
     private:
         GameObjectState currentState;

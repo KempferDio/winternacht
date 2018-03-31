@@ -27,6 +27,22 @@ GameObject::GameObject(Sprite *sprite, SDL_Rect rect) {
     this->rect = rect;
 }
 
+void GameObject::MoveLeft() {
+    addPosition(-1, 0);
+}
+
+void GameObject::MoveRight() {
+    addPosition(1, 0);
+}
+
+void GameObject::Jump() {
+    addPosition(0, -1);
+}
+
+void GameObject::Use() {
+    Log::LogDebug("Using...");
+}
+
 void GameObject::setCurrentState(GameObjectState newState) {
     currentState = newState;
 }

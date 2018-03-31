@@ -41,20 +41,23 @@ void InputManager::HandleInput() {
     GetCommand();
     
     while(!commandQueue.empty()) {
-        
-        if(commandQueue.front() != NULL) {
-            commandQueue.front()->execute(actor);
-        } else {
+        if(commandQueue.front() == NULL) {
             Log::LogError("Command is NULL");
+            return;
         }
+
+        Command* com = commandQueue.front();
+        com->execute(actor);
         commandQueue.pop();
-        
     }
 }
 
 void InputManager::Terminate() {
-   //
-   
+
+   delete button_A;
+   delete button_D;
+   delete button_S;
+   delete button_W;
 }
 
 /*
@@ -71,6 +74,7 @@ void InputManager::GetCommand() {
         else if(e.type == SDL_KEYDOWN) {
             if(e.key.keysym.sym == SDLK_w) {
                 commandQueue.push(button_W);
+                
             }
             if(e.key.keysym.sym == SDLK_a) {
                 commandQueue.push(button_A);
