@@ -6,25 +6,27 @@
 #include <Box2D/Box2D.h>
 #include <Physics/PhysicsManager.h>
 
-namespace Core {
-    namespace GameObjects {
-        class Pawn : public GameObject {
-        public:
-            Pawn();
-            Pawn(Sprite *sprite);
-            Pawn(Sprite *sprite, SDL_Rect rect);
+namespace Core
+{
+namespace GameObjects
+{
+class Pawn : public GameObject
+{
+public:
+  Pawn();
+  Pawn(Sprite *sprite);
 
-            void Update();
+  void Update();
 
-            void MoveLeft();
-            void MoveRight();
-            void Jump();
-            void Use();
+  void MoveLeft();
+  void MoveRight();
+  void Jump();
+  void Use();
 
-            //First physics
-            b2Body *rigidBody;
-        };
-    }
+  //First physics
+  b2Body *rigidBody;
+};
+}
 }
 
 #endif

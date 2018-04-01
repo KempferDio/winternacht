@@ -9,6 +9,10 @@ std::map<std::string, Sprite*> ResourceManager::Sprites;
 std::map<std::string, GameObjects::Pawn*> ResourceManager::Pawns;
 std::map<std::string, GameObjects::Tile*> ResourceManager::Tiles;
 
+
+/**
+ * Inits SDL_Image with PNG flag
+*/
 int ResourceManager::InitManager(SDL_Renderer *render) {
     mainRenderer = render;
 
@@ -21,20 +25,28 @@ int ResourceManager::InitManager(SDL_Renderer *render) {
     return 0;
 }
 
-
+/**
+ * Creates pawn from sprite and returns pointer to this pawn
+*/
 GameObjects::Pawn* ResourceManager::CreatePawn(const char* name, const char* spriteName) {
     GameObjects::Pawn* pawn = new GameObjects::Pawn(GetSprite(spriteName));
     Pawns.insert(std::pair<std::string, GameObjects::Pawn*>(name, pawn));
     return Pawns.at(name);
 }
 
+/**
+ * Creates tile from sprite and returns pointer to this tile
+*/
 GameObjects::Tile* ResourceManager::CreateTile(const char* name, const char* spriteName) {
     GameObjects::Tile* tile = new GameObjects::Tile(GetSprite(spriteName));
     Tiles.insert(std::pair<std::string, GameObjects::Tile*>(name, tile));
     return Tiles.at(name);
 }
 
-//Texture
+/**
+ * Creates surface and texture from that surface.
+ * Returns pointer to the texture
+*/
 Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
 
     SDL_Surface *surface;
@@ -66,7 +78,9 @@ Texture* ResourceManager::LoadTexture(const char* path, const char* name) {
     return Textures.at(name);
 }
 
-//Sprite
+/**
+ * Creates sprite from texture with parameters
+*/
 Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const char* spriteName,
     int clipRowCount, int clipColumnCount, int clipSize) {
     
@@ -92,6 +106,9 @@ Sprite* ResourceManager::LoadSpriteFromTexture(const char* textureName, const ch
     return Sprites.at(spriteName);
 }
 
+/**
+ * Returns pointer to the texture
+*/
 Texture* ResourceManager::GetTexture(const char* name) {
     Texture *texture;
     try {
@@ -103,6 +120,9 @@ Texture* ResourceManager::GetTexture(const char* name) {
     return texture;
 }
 
+/**
+ * Returns pointer to the sprite
+*/
 Sprite* ResourceManager::GetSprite(const char* name) {
     Sprite *sprite;
     try {
@@ -114,7 +134,9 @@ Sprite* ResourceManager::GetSprite(const char* name) {
     return sprite;
 }
 
-
+/**
+ * Returns pointer to the pawn
+*/
 GameObjects::Pawn* ResourceManager::GetPawn(const char* name) {
     GameObjects::Pawn* pawn;
     try {
@@ -127,6 +149,9 @@ GameObjects::Pawn* ResourceManager::GetPawn(const char* name) {
     return pawn;
 }
 
+/**
+ * Returns pointer to the tile
+*/
 GameObjects::Tile* ResourceManager::GetTile(const char* name) {
     GameObjects::Tile* tile;
     try {
@@ -139,6 +164,9 @@ GameObjects::Tile* ResourceManager::GetTile(const char* name) {
     return tile;
 }
 
+/**
+ * Delete all pointers and clear maps
+*/
 void ResourceManager::FreeMemory() {
     
     for(auto texture : Textures) {
@@ -151,7 +179,6 @@ void ResourceManager::FreeMemory() {
     for(auto pawn : Pawns) {
         delete pawn.second;
     }
-
     for(auto tile : Tiles) {
         delete tile.second;
     }
@@ -161,6 +188,9 @@ void ResourceManager::FreeMemory() {
     Tiles.clear();
 }
 
+/**
+ * Terminates SDL_Image lib
+*/
 void ResourceManager::Terminate() {
     IMG_Quit();
 }
