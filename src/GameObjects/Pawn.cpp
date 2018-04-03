@@ -35,6 +35,7 @@ void Pawn::MoveLeft()
 {
     b2Vec2 vel = rigidBody->GetLinearVelocity();
     vel.x = b2Max(vel.x - 1.0f, 1.0f);
+    Log::LogDebug("Move left. x is ",vel.x);
     rigidBody->SetLinearVelocity(vel);
 }
 
@@ -42,13 +43,14 @@ void Pawn::MoveRight()
 {
     b2Vec2 vel = rigidBody->GetLinearVelocity();
     vel.x = b2Max(vel.x + 1.0f, 1.0f);
+    Log::LogDebug("Move right. x is ",vel.x);
     rigidBody->SetLinearVelocity(vel);
 }
 
 void Pawn::Jump()
 {
     b2Vec2 vel = rigidBody->GetLinearVelocity();
-    vel.y = b2Max(vel.y - 5.0f, 5.0f);
+    vel.y = b2Max(vel.y - 15.0f, 15.0f);
     rigidBody->SetLinearVelocity(vel);
 }
 
